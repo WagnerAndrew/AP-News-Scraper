@@ -40,12 +40,13 @@
                             <p>Articles go here</p>
                         </div>
                         <div class="card-action">
-                                
-                                    <a id="homeBtn" class="btn-small waves-effect waves-light black-text lime lighten-1">Article
-                                            Notes</a>
-                                    <a id="deleteArticleBtn" class="btn-small waves-effect waves-light white-text red lighten-1">Delete
-                                            From Saved</a>
-                                
+
+
+                            <a id="homeBtn" href="#modal1" class="waves-effect waves-light modal-trigger btn-small black-text lime lighten-1 ">Article
+                                Notes</a>
+                            <a id="deleteArticleBtn" class="btn-small waves-effect waves-light white-text red lighten-1">Delete
+                                From Saved</a>
+
                         </div>
                     </div>
                 </div>
@@ -55,6 +56,30 @@
 
     </div>
 
+    <!-- <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a> -->
+
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>Article Notes</h4>
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="textarea1" class="materialize-textarea"></textarea>
+                            <label for="textarea1">Add your notes</label>
+                        </div>
+                    </div>
+                    <button class="btn lime black-text waves-effect waves-light" type="submit" name="action">Submit
+                        <i class="material-icons right">add</i>
+                      </button>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-lime white-text red btn-flat">Close</a>
+        </div>
+    </div>
 <!--  Scripts-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="js/frontEnd.js"></script>

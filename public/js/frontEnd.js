@@ -1,7 +1,12 @@
-// $(document).on("click","#savedArticlesBtn", savedArticles);
-
-// function savedArticles() {
-//   $.get("/savedArticles", function(data) {
-//     console.log(data)
-//   });
-// }
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems, options);
+  });
+  
+  // Or with jQuery
+  
+  $(document).ready(function(){
+    $('.modal').modal();
+  });
+       
+  
