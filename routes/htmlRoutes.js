@@ -7,38 +7,15 @@ app.get("/", function(req, res) {
     res.render("index")
 });
 
+app.get("/index", function(req, res) {
+    res.render("index")
+});
+
+app.get("/savedArticles", function(req, res) {
+    res.render("savedArticles")
+});
+
+
+
+//Close export
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-// // Load index page
-// app.get("/", function(req, res) {
-//     res.render("index")
-// });
-
-// app.get("/", function(req, res) {
-//     db.Article.findAll({}).then(function(dbArticle) {
-//       console.log("Article",dbArticle);
-//       res.render("index", {
-//         article: dbArticle
-//       });
-//     });
-//   });
-
-
-// // Load Saved Articles page
-// app.get("/savedArticles", function(req, res) {
-//     res.render("savedArticles")
-// });

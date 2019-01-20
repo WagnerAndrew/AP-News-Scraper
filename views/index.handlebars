@@ -22,8 +22,8 @@
 </nav>
 
 <div class="container">
-  <h1 class="header center red-text">Mongo Scraper</h1>
-  <h5 class="header center red-text">New York Times Edition</h5>
+  <h1 class="header center red-text">Associated Press Top News</h1>
+  <h5 class="header center red-text">Mongo Scraper</h5>
 
   <div class="row center">
     <a href="/scrape" id="scrapeBtn" class="btn-large waves-effect waves-light black-text lime lighten-1">Scrape Articles</a>
@@ -58,7 +58,7 @@
           <p> {{this.summary}} </p>
         </div>
         <div class="card-action">
-          <a href="{{this.link}}" target="_blank" class="btn-small waves-effect waves-light black-text lime lighten-1">Read Article</a>
+          <a href="https://www.apnews.com{{this.link}}" target="_blank" class="btn-small waves-effect waves-light black-text lime lighten-1">Read Article</a>
           <a id="saveArticleBtn" class="btn-small waves-effect waves-light black-text lime lighten-1">Save Article</a>
         </div>
       </div>
