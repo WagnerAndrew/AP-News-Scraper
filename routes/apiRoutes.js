@@ -107,76 +107,27 @@ app.post("/saveNote/:id", function(req, res) {
 });
 // NOTE POST END////////////////////////////////////////////////////////////////////////////////////////////////
 
-// NOTES GATHER END////////////////////////////////////////////////////////////////////////////////////////////////
-app.get("/articles/:id", function(req, res) {
-  // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
-  db.Article.findOne({ _id: req.params.id })
-    // ..and populate all of the notes associated with it
-    .populate("note")
-    .then(function(dbArticle) {
-      // If we were able to successfully find an Article with the given id, send it back to the client
-      res.json(dbArticle);
-    })
-    .catch(function(err) {
-      // If an error occurred, send it to the client
-      res.json(err);
-    });
-});
-// NOTES GATHER END////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 //Close Exports
 };
 
 
 
-
-
-
-
-
-
-
-
-
-// // DELETE ARTICLE START//////////////////////////////////////////////////////////////////////////////////////////////
-// app.get("/deleteArticle/:id", function (req, res) {
-
-//   console.log("req.params is: ", req.params.id );
-
-//   db.Article.update(req.body)
-//     .then(function (dbArticle) {
-//       return db.Article.findOneAndUpdate({ _id: req.params.id }, { $set: { saved: false } });
+// // NOTES GATHER END////////////////////////////////////////////////////////////////////////////////////////////////
+// app.get("/articles/:id", function(req, res) {
+//   // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+//   db.Article.findOne({ _id: req.params.id })
+//     // ..and populate all of the notes associated with it
+//     .populate("note")
+//     .then(function(dbArticle) {
+//       // If we were able to successfully find an Article with the given id, send it back to the client
+//       res.json(dbArticle);
 //     })
-//     .then(function (dbArticle) {
-//       // If we were able to successfully update an Article, send it back to the client
-//       // res.json(dbArticle);
-
-//       db.Article.find({ saved: true })
-//       .then(function (dbArticle) {
-//         // console.log("dbArticle is: ", dbArticle);
-
-//         res.render("index", {
-//           article: dbArticle
-//         });
-//       })
-//       .catch(function (err) {
-//         console.log(err);
-//       });
-  
-
-
-//       res.render("savedArticles", {
-//         article: dbArticle
-//       });
-//     })
-//     .catch(function (err) {
+//     .catch(function(err) {
 //       // If an error occurred, send it to the client
 //       res.json(err);
 //     });
 // });
-// // DELETE ARTICLE END////////////////////////////////////////////////////////////////////////////////////////////////
-
+// // NOTES GATHER END////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // app.get("/articles", function (req, res) {
