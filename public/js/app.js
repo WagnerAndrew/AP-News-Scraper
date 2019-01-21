@@ -22,32 +22,34 @@ $(document).on("click", "#deleteArticleBtn", function() {
     success: function(response) {
       console.log("Article deleted!");
     }
+  })
+  .then(function(data) {
+    console.log(data);
+    location.reload();
   });
+
 });
 // DELETE ARTICLE END////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // SAVE NOTE START////////////////////////////////////////////////////////////////////////////////////////////////
-$(document).on("click", "#saveNoteBtn", function() {
-  console.log("saveNoteBtn ID is: ", $(this).attr("data") );
+$(document).on("click", "#saveNoteBtn", function(event) {
+  event.preventDefault();
+  // console.log("saveNoteBtn ID is: ", $(this).attr("data") );
   
   $.ajax({
     method: "POST",
     url: "/saveNote/" + $(this).attr("data"),
     data: {
-      body: $("#noteBody").val()
+      note: $("#noteBody").val()
     }
   })
     .then(function(data) {
-      console.log(data);
-      // Empty the notes section
-      // $("#notes").empty();
+      console.log("Response from note post is: ",data);
+      
     });
-
-  // Also, remove the values entered in the input and textarea for note entry
-  // $("#bodyinput").val("");
+  
 });
-
 // SAVE NOTE END////////////////////////////////////////////////////////////////////////////////////////////////
 
 

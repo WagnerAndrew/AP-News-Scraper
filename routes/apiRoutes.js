@@ -72,46 +72,49 @@ module.exports = function (app) {
 // DELETE ARTICLE START//////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/deleteArticle/:id", function (req, res) {
 
-  // console.log("req.params is: ", req.params.id );
-
   db.Article.update(req.body)
-    .then(function (dbArticle) {
-      return db.Article.findOneAndUpdate({ _id: req.params.id }, { $set: { saved: false } });
-    })
-    .then(function (dbArticle) {
-      // If we were able to successfully update an Article, send it back to the client
-      // res.json(dbArticle);
-      res.redirect('/savedArticles');
-      
-    })
-    .catch(function (err) {
-      // If an error occurred, send it to the client
-      res.json(err);
-    });
-
-    // res.redirect('/savedArticles');
+  .then(function (dbArticle) {
+    return db.Article.findOneAndUpdate({ _id: req.params.id }, { $set: { saved: false } });
+  })
+  .then(function (dbArticle) {
+    res.json(dbArticle);
+    
+  })
+  .catch(function (err) {
+    res.json(err);
+  });
 });
 // DELETE ARTICLE END////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
-// NOTE START//////////////////////////////////////////////////////////////////////////////////////////////
+// NOTE POST START//////////////////////////////////////////////////////////////////////////////////////////////
 app.post("/saveNote/:id", function(req, res) {
-  console.log("Note req.body Note is: ", req.body);
-  console.log("Note req.params.data is: ", req.params.data)
-  console.log("Note req.params.body is: ", req.params.body)
   
-  db.Note.create(req.body)
+  var newNote = {
+    articleID : req.params.id,
+    body : req.body.note
+  };
 
-
+  db.Note.create(newNote)
     .then(function(dbNote) {
-      // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
-      // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
-      // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
-      return db.Article.findOneAndUpdate({ _id: req.params.data }, { note: req.params.data }, { new: true });
+      console.log("dbNote is: ", dbNote);
+      res.json(dbNote);
     })
+    .catch(function(err) {
+      res.json(err);
+    });
+});
+// NOTE POST END////////////////////////////////////////////////////////////////////////////////////////////////
+
+// NOTES GATHER END////////////////////////////////////////////////////////////////////////////////////////////////
+app.get("/articles/:id", function(req, res) {
+  // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+  db.Article.findOne({ _id: req.params.id })
+    // ..and populate all of the notes associated with it
+    .populate("note")
     .then(function(dbArticle) {
-      // If we were able to successfully update an Article, send it back to the client
+      // If we were able to successfully find an Article with the given id, send it back to the client
       res.json(dbArticle);
     })
     .catch(function(err) {
@@ -119,10 +122,10 @@ app.post("/saveNote/:id", function(req, res) {
       res.json(err);
     });
 });
-// NOTE END////////////////////////////////////////////////////////////////////////////////////////////////
+// NOTES GATHER END////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-  //Close Exports
+//Close Exports
 };
 
 
