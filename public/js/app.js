@@ -43,34 +43,50 @@ $(document).on("click", "#saveNoteBtn", function(event) {
     method: "POST",
     url: "/saveNote/" + $(this).attr("data"),
     data: {
-      note: $("#noteBody").val()
+      note: $("#noteBody"+notesID).val()
     }
   })
     .then(function(data) {
       // console.log("Response from note post is: ", data);
-      // var newNote = data.body;
-      var newNote = (`<div class="card horizontal"><div class="card-content"><h5>${data.body}</h5></div></div>`)
+      var newNote = (`<div class="card horizontal"><div class="card-content"><h5>${data.body}</h5><button data="${data.articleID}" id="deleteNoteBtn" class="btn-small right red white-text waves-effect waves-light">Delete Note</button></div></div>`)
 
-      // console.log ("!!!!!!!!!!!!!!!!!!!!!!!!!!!newNote is: ", newNote)
+      $("#noteBody"+notesID).val("");
+      $("#notes"+notesID).append(newNote);
+    });    
 
-      $("#noteBody").val("");
-      $("#notes"+notesID).append(newNote)
-
-    });
-
-    
-    
 });
 // SAVE NOTE END////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
+// GET NOTE START////////////////////////////////////////////////////////////////////////////////////////////////
+$(document).on("click", "#addNoteBtn", function(event) {
+  event.preventDefault();
 
+  var notesID = $(this).attr("data");
 
+  $.ajax({
+    type: "GET",
+    url: "/notes/" + $(this).attr("data")
+  })
+  .then(function(data) {
+    // console.log("Response from note post is: ", data);
+    $("#notes"+notesID).empty();
 
+    for (var i = 0; i < data.length; i++) {
 
+      $("#notes"+notesID).append(`<div class="card horizontal"><div class="card-content"><h5>${data[i].body}</h5><button data="${data[i].articleID}" id="deleteNoteBtn" class="btn-small right red white-text waves-effect waves-light">Delete Note</button></div></div>`)
 
+    }
+  });    
 
+});
+// GET NOTE END////////////////////////////////////////////////////////////////////////////////////////////////
+
+// $(document).on("click", "#closeBtn", function(event) {
+//   event.preventDefault();
+//   location.reload();
+// });
 
 // $("#scrapeBtn").on("click", function (){
 //  $("#articlesDiv").empty();
