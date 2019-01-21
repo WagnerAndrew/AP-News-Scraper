@@ -48,7 +48,7 @@ $(document).on("click", "#saveNoteBtn", function(event) {
   })
     .then(function(data) {
       // console.log("Response from note post is: ", data);
-      var newNote = (`<div class="card horizontal"><div class="card-content"><h5>${data.body}</h5><button data="${data.articleID}" id="deleteNoteBtn" class="btn-small right red white-text waves-effect waves-light">Delete Note</button></div></div>`)
+      var newNote = (`<div class="card horizontal"><div class="card-content"><h5>${data.body}</h5><button data="${data._id}" id="deleteNoteBtn" class="btn-small red white-text waves-effect waves-light">Delete Note</button></div></div>`)
 
       $("#noteBody"+notesID).val("");
       $("#notes"+notesID).append(newNote);
@@ -75,13 +75,33 @@ $(document).on("click", "#addNoteBtn", function(event) {
 
     for (var i = 0; i < data.length; i++) {
 
-      $("#notes"+notesID).append(`<div class="card horizontal"><div class="card-content"><h5>${data[i].body}</h5><button data="${data[i].articleID}" id="deleteNoteBtn" class="btn-small right red white-text waves-effect waves-light">Delete Note</button></div></div>`)
+      $("#notes"+notesID).append(`<div class="card horizontal"><div class="card-content"><h5>${data[i].body}</h5><button data="${data[i]._id}" id="deleteNoteBtn" class="btn-small red white-text waves-effect waves-light">Delete Note</button></div></div>`)
 
     }
   });    
 
 });
 // GET NOTE END////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+// DELETE ARTICLE START//////////////////////////////////////////////////////////////////////////////////////////////
+$(document).on("click", "#deleteNoteBtn", function() {
+  $.ajax({
+    type: "GET",
+    url: "/deleteNote/" + $(this).attr("data"),
+
+    success: function(response) {
+      console.log("Note deleted!");
+    }
+  // })
+  // .then(function(data) {
+  //   console.log(data);
+    // location.reload();
+  });
+
+});
+// DELETE ARTICLE END////////////////////////////////////////////////////////////////////////////////////////////////
 
 // $(document).on("click", "#closeBtn", function(event) {
 //   event.preventDefault();
