@@ -7,36 +7,41 @@ module.exports = function (app) {
   // SCRAPE START//////////////////////////////////////////////////////////////////////////////////////////////////////
   app.get("/scrape", function (req, res) {
 
-    axios.get("https://www.apnews.com/apf-topnews").then(function (response) {
+    axios.get("https://www.apnews.com/apf-topnews")
+      .then(function (response) {
 
-      var $ = cheerio.load(response.data);
+        var $ = cheerio.load(response.data);
+        var lenOfRecords = $("div.FeedCard").length
 
-      $("div.FeedCard").each(function (i, element) {
+        var count = 1;
+        $("div.FeedCard").each(function (i, element) {
 
-        var article = {};
+          var article = {};
 
-        article.title = $(element).find("div.CardHeadline").find("a.headline").find("h1").text();
-        article.summary = $(element).find("a.content-container").find("div.content").find("p").text();
-        article.link = $(element).find("div.CardHeadline").find("a.headline").attr("href");
+          article.title = $(element).find("div.CardHeadline").find("a.headline").find("h1").text();
+          article.summary = $(element).find("a.content-container").find("div.content").find("p").text();
+          article.link = $(element).find("div.CardHeadline").find("a.headline").attr("href");
+          if (article.title && article.summary && article.link) {
+            db.Article.create(article)
+            .then(function (dbArticle) {
 
-        db.Article.create(article)
-          .then(function (dbArticle) {
-          })
-          .catch(function (err) {
-            console.log(err);
-          });
-      });
+              count++;
+              if (count === lenOfRecords) {
 
-      db.Article.find({})
-        .then(function (dbArticle) {
-          res.render("index", {
-            article: dbArticle
-          });
-        })
-        .catch(function (err) {
-          console.log(err);
+                db.Article.find({})
+                  .then(function (dbArticle) {
+                    //console.log("The records",dbArticle);
+                    res.render("index", { article: dbArticle });
+                  })
+                  .catch(function (err) { console.log(err); });
+              }
+            })
+            .catch(function (err) { console.log(err); });
+          }
         });
-    });
+      }).catch((error) => {
+        console.log("Error in creating records", error);
+      });
   });
   // SCRAPE END//////////////////////////////////////////////////////////////////////////////////////////////////////
 
