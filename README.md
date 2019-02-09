@@ -1,4 +1,4 @@
-##AP News Scraper
+## AP News Scraper
 
 This is a full-stack application that scrapes the Associated Press News website for top stories.
 
